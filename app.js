@@ -39,6 +39,5 @@ for (const file of commandFiles) {
 
 }
 
-
-console.log(client.guilds.cache);
+//console.log(client.guilds.client)
 client.login(token);
