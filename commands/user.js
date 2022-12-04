@@ -6,3 +6,5 @@ module.exports = {
         await interaction.reply(`This command was run by ${interaction.user.username}, who joined on ${interaction.member.joinedAt}.`);
     }
 };
+
+//delete later, now included as subcommand in info.js

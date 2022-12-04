@@ -6,24 +6,33 @@ const token = process.env.DISCORD_TOKEN;
 const appId = process.env.APP_ID;
 const guildId = process.env.GUILD_ID;
 
-const commands = [];
+const guildCommands = [];
+const globalCommands = [];
 
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const commandGuildFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const commandGlobalFiles = fs.readdirSync('./global-commands').filter(file => file.endsWith('.js'));
 
-for (const file of commandFiles) {
+for (const file of commandGuildFiles) {
     const command = require(`./commands/${file}`);
-    commands.push(command.data.toJSON());
+    guildCommands.push(command.data.toJSON());
+}
+
+for (const file of commandGlobalFiles) {
+    const command = require(`./global-commands/${file}`);
+    globalCommands.push(command.data.toJSON());
 }
 
 const rest = new REST({ version: '10' }).setToken(token);
 
 (async () => {
     try {
-        console.log(`Started refreshing ${commands.length} application (/) commands.`);
+        console.log(`Started refreshing ${guildCommands.length} guild application (/) commands.`);
+        console.log(`Started refreshing ${globalCommands.length} global application (/) commands.`);
         const data = await rest.put(
             //Routes.applicationGuildCommands(appId, guildId) for personal server
-            //Routes.applicationGuildCommands(appId) for any server with bot in it (this one doesn't seem to work)
-            Routes.applicationGuildCommands(appId, guildId), { body: commands }
+            //Routes.applicationCommand(appId), { body: commands } for any server with bot in it
+            Routes.applicationGuildCommands(appId, guildId), { body: guildCommands },
+            Routes.applicationCommand(appId), { body: globalCommands }
         );
 
         console.log(`Successfully reloaded ${data.length} application (/) commands.`);

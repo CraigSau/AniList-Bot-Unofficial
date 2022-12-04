@@ -6,3 +6,5 @@ module.exports = {
         await interaction.reply(`This server is ${interaction.guild.name} and has ${interaction.guild.memberCount} members.`);
     }
 };
+
+//delete later, now included as subcommand in info.js
