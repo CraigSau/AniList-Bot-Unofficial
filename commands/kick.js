@@ -1,5 +1,4 @@
 const { SlashCommandBuilder, PermissionFlagsBits, Options } = require('discord.js');
-const { execute } = require('./info');
 
 const data = new SlashCommandBuilder()
     .setName('kick')

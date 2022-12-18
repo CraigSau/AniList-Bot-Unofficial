@@ -30,9 +30,10 @@ const rest = new REST({ version: '10' }).setToken(token);
         console.log(`Started refreshing ${globalCommands.length} global application (/) commands.`);
         const data = await rest.put(
             //Routes.applicationGuildCommands(appId, guildId) for personal server
-            //Routes.applicationCommand(appId), { body: commands } for any server with bot in it
+            //Routes.applicationCommans(appId), { body: commands } for any server with bot in it
+            //Routes.applicationCommands(appId), { body: globalCommands },
             Routes.applicationGuildCommands(appId, guildId), { body: guildCommands },
-            Routes.applicationCommand(appId), { body: globalCommands }
+
         );
 
         console.log(`Successfully reloaded ${data.length} application (/) commands.`);
