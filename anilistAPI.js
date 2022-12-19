@@ -1,25 +1,7 @@
-
+const query = require('./queries/user');
 
 async function getAnime(animeQuery) {
-    const query = `
-        query ($page: Int, $perPage: Int, $search: String) {
-    Page(page: $page, perPage: $perPage) {
-        pageInfo {
-            total
-            perPage
-        }
-        media (search: $search, type: ANIME, sort: FAVOURITES_DESC) {
-            id
-            title {
-                romaji
-                english
-                native
-            }
-            type
-            generes
-        }
-    }
-}`;
+
 
     let variables = {
         search: query,
