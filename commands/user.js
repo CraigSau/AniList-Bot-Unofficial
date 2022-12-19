@@ -45,5 +45,7 @@ const search = async searchArg => {
 
 module.exports = {
     data: data,
-    search
+    async execute() {
+        await JSON.stringify(search);
+    }
 };
