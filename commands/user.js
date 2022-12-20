@@ -19,6 +19,7 @@ const search = async searchArg => {
     }
 
     const data = response.User;
+    console.log(data);
     const watchedTime = data.statistics.anime.minutesWatched;
     const chaptersRead = data.statistics.manga.chaptersRead;
 

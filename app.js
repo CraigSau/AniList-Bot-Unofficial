@@ -28,15 +28,12 @@ const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('
 for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const command = require(filePath);
-    // TODO: Investigate why if statement was hitting the else case, even though data and execute were both passed in command
-    //if ('data' in command && 'exectute' in command) {
-    //console.log(client.commands.set(command.data.name, command));
-    // } else {
-    //     console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
-    // }
+    if ('data' in command && 'execute' in command) {
+        console.log(client.commands.set(command.data.name, command));
+    } else {
+        console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+    }
     client.commands.set(command.data.name, command);
-
-
 }
 
 //console.log(client.guilds.client)
