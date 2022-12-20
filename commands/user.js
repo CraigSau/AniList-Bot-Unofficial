@@ -9,40 +9,48 @@ const data = new SlashCommandBuilder()
     .setDescription('Get info about a users AniList profile');
 
 
-const search = async searchArg => {
-    const response = await api(query, {
-        search: searchArg
-    });
+// PROBLEMS
+//-------------------
+//How do we run a graphql query through a discord slash command
+//How do we handle the json object that comes back from the query
+//How do we display that data in a discord message in a user friendly manner
 
-    if (response.error) {
-        return response;
-    }
+// const search = async searchArg => {
+//     const response = await api(query, {
+//         search: searchArg
+//     });
 
-    const data = response.User;
-    console.log(data);
-    const watchedTime = data.statistics.anime.minutesWatched;
-    const chaptersRead = data.statistics.manga.chaptersRead;
+//     if (response.error) {
+//         return response;
+//     }
 
-    const chaptersString = chaptersRead != 0 ? `Chapters read ${chaptersRead}` : "";
+//     const data = response.User;
+//     console.log(data);
+//     const watchedTime = data.statistics.anime.minutesWatched;
+//     const chaptersRead = data.statistics.manga.chaptersRead;
 
-    let daysWatched = "";
-    if (watchedTime != 0) {
-        daysWatched = (watchedTime / (60 * 24)).toFixed(1);
-        daysWatched = `Days watched: ${daysWatched}`;
-    }
+//     const chaptersString = chaptersRead != 0 ? `Chapters read ${chaptersRead}` : "";
 
-    let footer = "";
-    if (watchedTime) footer += daysWatched + "  ";
-    if (chaptersRead) footer += chaptersRead;
+//     let daysWatched = "";
+//     if (watchedTime != 0) {
+//         daysWatched = (watchedTime / (60 * 24)).toFixed(1);
+//         daysWatched = `Days watched: ${daysWatched}`;
+//     }
 
-    return discordMessage({
-        name: data.name,
-        url: data.siteUrl,
-        imageUrl: data.avatar.large,
-        description: striptags(data.about),
-        footer: footer
-    });
-};
+//     let footer = "";
+//     if (watchedTime) footer += daysWatched + "  ";
+//     if (chaptersRead) footer += chaptersRead;
+
+//     return discordMessage({
+//         name: data.name,
+//         url: data.siteUrl,
+//         imageUrl: data.avatar.large,
+//         description: striptags(data.about),
+//         footer: footer
+//     });
+// };
+
+
 
 module.exports = {
     data: data,
