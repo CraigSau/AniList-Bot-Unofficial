@@ -11,9 +11,15 @@ const data = new SlashCommandBuilder()
 
 // PROBLEMS
 //-------------------
-//How do we run a graphql query through a discord slash command
+//How do we run a graphql query through a discord slash command | Get data from graphql API
+
 //How do we handle the json object that comes back from the query
+
 //How do we display that data in a discord message in a user friendly manner
+
+//How do we link users anilist account to discord account
+
+
 
 // const search = async searchArg => {
 //     const response = await api(query, {

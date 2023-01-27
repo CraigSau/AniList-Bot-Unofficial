@@ -42,4 +42,3 @@ async function getAnime(animeQuery) {
 }
 
 module.exports = getAnime.fetch;
-

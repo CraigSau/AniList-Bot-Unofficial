@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "A discord bot to interact with the AniList API",
   "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+
   "author": "Craig Sauers",
   "license": "",
   "dependencies": {

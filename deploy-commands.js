@@ -25,12 +25,15 @@ for (const file of commandGlobalFiles) {
 const rest = new REST({ version: '10' }).setToken(token);
 
 (async () => {
+    // TODO: Get this async call to run multiple of the routes
+    // one for events and once for global events
     try {
         console.log(`Started refreshing ${guildCommands.length} guild application (/) commands.`);
         console.log(`Started refreshing ${globalCommands.length} global application (/) commands.`);
         const data = await rest.put(
             //Routes.applicationGuildCommands(appId, guildId) for personal server
             //Routes.applicationCommans(appId), { body: commands } for any server with bot in it
+
             //Routes.applicationCommands(appId), { body: globalCommands },
             Routes.applicationGuildCommands(appId, guildId), { body: guildCommands },
 
