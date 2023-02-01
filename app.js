@@ -10,11 +10,10 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 const eventsPath = path.join(__dirname, 'events');
 const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
-
+//Event handling
 for (const file of eventFiles) {
     const filePath = path.join(eventsPath, file);
     const event = require(filePath);
-    // TODO: Double check this logic, seems at first glance like the if statement is unnecessary...
     if (event.once) {
         client.once(event.name, (...args) => event.execute(...args));
     } else {
@@ -25,19 +24,16 @@ for (const file of eventFiles) {
 client.commands = new Collection();
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
-
+// Command handling
 for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const command = require(filePath);
-    // TODO: Investigate why if statement was hitting the else case, even though data and execute were both passed in command
-    //if ('data' in command && 'exectute' in command) {
-    //console.log(client.commands.set(command.data.name, command));
-    // } else {
-    //     console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
-    // }
+    if ('data' in command && 'execute' in command) {
+        console.log(client.commands.set(command.data.name, command));
+    } else {
+        console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+    }
     client.commands.set(command.data.name, command);
-
-
 }
 
 //console.log(client.guilds.client)
