@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-function getAnime(query, variables) {
+async function queryApi(query, variables) {
 
     var options = {
         method: 'POST',
@@ -16,7 +16,7 @@ function getAnime(query, variables) {
     };
 
 
-    return axios(options).then((response) => response.data).catch((err) => console.log(err));
+    return axios(options).then((response) => response.data.data).catch((err) => console.log(err));
 }
 
-module.exports = getAnime;
+module.exports = queryApi;
