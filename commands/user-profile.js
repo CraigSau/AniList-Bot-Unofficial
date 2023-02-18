@@ -1,3 +1,4 @@
+const { response } = require("express");
 const anilistApi = require("../anilistAPI");
 const query = require("../queries/user-profile");
 const { SlashCommandBuilder, EmbedBuilder, userMention } = require("discord.js");
@@ -7,7 +8,7 @@ const striptags = require('striptags');
 const data = new SlashCommandBuilder()
     .setName('user-profile')
     .setDescription('Get info about a users AniList profile')
-    .addMentionableOption(option =>
+    .addUserOption(option =>
         option.setName('user')
             .setDescription('Users discord @ / ID')
             .setRequired(true));
@@ -23,9 +24,10 @@ async function userAbout() {
     return String(striptags(obj));
 }
 
-async function userMinutesWatched() {
+async function userDaysWatched() {
     const obj = await anilistApi(query, variables).then((response) => response.User.statistics.anime.minutesWatched);
-    return String(obj);
+    const days = obj / 1440;
+    return String(days);
 }
 
 async function userChaptersRead() {
@@ -33,26 +35,37 @@ async function userChaptersRead() {
     return String(obj);
 }
 
+async function userProfilePic() {
+    const obj = await anilistApi(query, variables).then((response) => response.User.avatar.large);
+    return obj;
+}
+
 let aboutString = '';
-let user = userMention(data.options.user)
+let profilePic = '';
+let daysWatched = '';
+let chaptersRead = '';
 
 userAbout().then((response) => aboutString += response);
-// userMinutesWatched().then((response) => console.log(response));
-// userChaptersRead().then((response) => console.log(response));
+userDaysWatched().then((response) => daysWatched += response);
+userChaptersRead().then((response) => chaptersRead += response);
+userProfilePic().then((response) => profilePic += response);
 
+const userEmbed = new EmbedBuilder()
+    .setTitle(`${data.user}'s Anilist`)
+    //change the user to not hardcoded
+    .setURL(`https://anilist.co/user/Sensorless/`)
+    .setThumbnail(profilePic)
+    .addFields(
+        { name: 'About', value: `${aboutString}` },
+        { name: 'Days Watched', value: `${daysWatched}` },
+        { name: 'Chapters Read', value: `${chaptersRead}` }
+    )
 
 module.exports = {
     data: data,
     async execute(interaction) {
-        // TODO get the name that is @ed in the command to be in the response as well.
-        //PROBLEMS
-        // What does mentionableOption return?
-        // ---- Is it user ID? user nickname? something else all together?
-        // Need to pull the id (if it is an id) from the name of the mentionable option
-        // and @ them in the response message from the bot
         let userInput = interaction.options.getUser('user');
-
-        await interaction.reply({ content: `${aboutString} + '-' + ${userInput}` });
+        await interaction.reply({ content: userEmbed });
     },
 };
 
