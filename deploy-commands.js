@@ -24,6 +24,16 @@ for (const file of commandGlobalFiles) {
 
 const rest = new REST({ version: '10' }).setToken(token);
 
+// delete guild-based commands
+rest.put(Routes.applicationGuildCommands(appId, guildId), { body: [] })
+    .then(() => console.log('Successfully deleted all guild commands.'))
+    .catch(console.error);
+
+// delete global commands
+rest.put(Routes.applicationCommands(appId), { body: [] })
+    .then(() => console.log('Successfully deleted all application commands.'))
+    .catch(console.error);
+
 (async () => {
     // TODO: Get this async call to run multiple of the routes
     // one for events and once for global events
