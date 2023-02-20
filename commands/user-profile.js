@@ -28,7 +28,6 @@ async function getUser() {
 module.exports = {
     data: data,
     async execute(interaction) {
-        const userName = interaction.options.getUser('user');
         async function createEmbed() {
             const user = await getUser();
             let aboutString = '';
@@ -57,7 +56,6 @@ module.exports = {
         }
 
         await interaction.reply({ embeds: [await createEmbed()] });
-        await interaction.followUp(`${userName}'s Profile`)
     },
 };
 
