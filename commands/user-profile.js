@@ -25,33 +25,6 @@ async function getUser() {
     return obj.User
 }
 
-// async function createEmbed() {
-//     const user = await getUser();
-//     let aboutString = '';
-//     if (user.about != null) {
-//         aboutString = striptags(user.about);
-//     } else {
-//         aboutString = 'No about found'
-//     }
-//     let daysWatched = parseInt(user.statistics.anime.minutesWatched / 1440);
-//     daysWatched = String(daysWatched);
-//     let chaptersRead = user.statistics.manga.chaptersRead;
-//     chaptersRead = String(chaptersRead);
-//     const profilePic = user.avatar.large;
-//     const userEmbed = new EmbedBuilder()
-//         .setTitle(`${data.options.getUser('user')}'s Anilist`)
-//         //TODO - change the user to not hardcoded
-//         .setURL(`https://anilist.co/user/Sensorless/`)
-//         .setThumbnail(profilePic)
-//         .addFields(
-//             { name: 'About', value: aboutString },
-//             { name: 'Days Watched', value: daysWatched },
-//             { name: 'Chapters Read', value: chaptersRead }
-//         )
-//     return userEmbed
-// }
-
-
 module.exports = {
     data: data,
     async execute(interaction) {
