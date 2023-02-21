@@ -2,7 +2,8 @@ const { SlashCommandBuilder } = require('discord.js');
 
 const data = new SlashCommandBuilder()
     .setName('ping')
-    .setDescription('Replies with Pong!');
+    .setDescription('Replies with pong!')
+
 
 module.exports = {
     data: data,
