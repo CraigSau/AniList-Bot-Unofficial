@@ -1,0 +1,25 @@
+<body>
+    <h3>Loading...</h3>
+</body>
+
+<script>
+    //Getting URL fragment and removing # from it
+    let hash = window.location.hash.substr(1);
+
+    //Looping through it and making array
+    let result = hash.split("&").reduce(function(res, item) {
+        let parts = item.split("=");
+        res[parts[0]] = parts[1];
+        return res;
+    }, {});
+
+    //Storing access_token and expires_in to variables (we got these from the URL fragment)
+    let access_token = result["access_token"], expires_in = result["expires_in"];
+
+    //Storing these 2 variable in local storage so we can access them whenever we need them
+    window.localStorage.setItem('access_token', access_token);
+    window.localStorage.setItem('expires_in', expires_in);
+
+    //Redirecting them to the page we want
+    window.location.replace("success.html");
+</script>
